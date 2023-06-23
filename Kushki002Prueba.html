@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba Kushki</title>
+    <style>
+        form > iframe {
+            height: 1000px;
+        }
+    </style>
+    <!-- Incluye el script de kushki-checkout.js en tu página de pago -->
+    <script src="https://cdn-uat.kushkipagos.com/kushki-checkout.js"></script>
+    <script src="ScriptKushki.js"></script>
+</head>
+<body>
+    <!-- Añade el formulario de Kajita a tu sitio -->
+    <form id="my-form" action="/confirm" method="post">
+        <input type="hidden" name="cart_id" value="123">
+    </form>
+
+    <!-- Agrega el script para configurar Kajita y solicitar el token de suscripción -->
+    <script type="text/javascript">
+        var kushki = new KushkiCheckout({
+            kformId: "fBNZz7XhK", // Reemplaza "fBNZz7XhK" por el identificador correcto de tu Kajita
+            form: "my-form",
+            publicMerchantId: "594f2070d43649e1aec47d9f8f5d72d0", // Reemplaza "594f2070d43649e1aec47d9f8f5d72d0" por tu credencial pública
+            amount: "14.99",
+            currency: "USD",
+            payment_methods: ["credit-card"], // Métodos de pago habilitados
+            is_subscription: true,
+            inTestEnvironment: true,
+        });
+
+        // Solicitar token de suscripción
+kushki.requestSubscriptionToken({
+  currency: "USD",
+  card: {
+    name: form.cardHolderName,
+    number: form.cardNumber,
+    cvc: form.cvc,
+    expiryDate: form.expirationDate,
+  },
+}, (response) => {
+  if(!response.code){
+    console.log(response.token);
+    // Submit your code to your back-end
+  } else {
+    console.error('Error: ',response.error, 'Code: ', response.code, 'Message: ',response.message);
+  }
+});
+    </script>
+</body>
+</html>
+
