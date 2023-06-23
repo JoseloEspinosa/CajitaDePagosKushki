@@ -1,0 +1,282 @@
+{
+	"info": {
+		"_postman_id": "a9d14e4e-0fc6-46f0-99cf-977a7607cdc3",
+		"name": "Prueba Kushki",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20018682",
+		"_collection_link": "https://cloudy-crater-713436.postman.co/workspace/PruebaKushki~dd43ccbb-7747-4462-8d17-63f248c2fea7/collection/20018682-a9d14e4e-0fc6-46f0-99cf-977a7607cdc3?action=share&creator=20018682&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Request a recurring charge token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Public-Merchant-Id",
+						"value": "594f2070d43649e1aec47d9f8f5d72d0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"card\": {\r\n    \"name\": \"Don Draper\",\r\n    \"number\": \"5451951574925480\",\r\n    \"expiryMonth\": \"11\",\r\n    \"expiryYear\": \"26\",\r\n    \"cvv\": \"123\"\r\n  },\r\n  \"currency\": \"USD\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api-uat.kushkipagos.com/subscriptions/v1/card/tokens",
+					"protocol": "https",
+					"host": [
+						"api-uat",
+						"kushkipagos",
+						"com"
+					],
+					"path": [
+						"subscriptions",
+						"v1",
+						"card",
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Subscription",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Private-Merchant-Id",
+						"value": "ef50661210954743a5db89079b87cd7a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"token\": \"9d8125570c3d404fa272bebd08fbcde1\",\r\n  \"planName\": \"Premium\",\r\n  \"periodicity\": \"custom\",\r\n  \"contactDetails\": {\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"secondLastName\": \"string\",\r\n    \"email\": \"user@example.com\",\r\n    \"documentType\": \"CC\",\r\n    \"documentNumber\": \"string\",\r\n    \"phoneNumber\": \"+593988734644\"\r\n  },\r\n  \"ignoreWarnings\": true,\r\n  \"amount\": {\r\n    \"currency\": \"USD\",\r\n    \"subtotalIva\": 0,\r\n    \"subtotalIva0\": 10,\r\n    \"iva\": 0,\r\n    \"ice\": 0,\r\n    \"extraTaxes\": {\r\n      \"iac\": 0,\r\n      \"tasaAeroportuaria\": 0,\r\n      \"agenciaDeViaje\": 0\r\n    }\r\n  },\r\n  \"startDate\": \"2023-06-23\",\r\n  \"language\": \"es\",\r\n  \"metadata\": {\r\n    \"key0\": \"value0\",\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "https://api-uat.kushkipagos.com/subscriptions/v1/card/",
+					"protocol": "https",
+					"host": [
+						"api-uat",
+						"kushkipagos",
+						"com"
+					],
+					"path": [
+						"subscriptions",
+						"v1",
+						"card",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pre-Authorize Payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Private-Merchant-Id",
+						"value": "ef50661210954743a5db89079b87cd7a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": {\r\n    \"ice\": 0,\r\n    \"iva\": 0,\r\n    \"subtotalIva\": 0,\r\n    \"subtotalIva0\": 10,\r\n    \"currency\": \"USD\"\r\n  },\r\n  \"name\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"email\": \"user@example.com\",\r\n  \"fullResponse\": \"v2\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api-uat.kushkipagos.com/subscriptions/v1/card/1687493542654000/authorize",
+					"protocol": "https",
+					"host": [
+						"api-uat",
+						"kushkipagos",
+						"com"
+					],
+					"path": [
+						"subscriptions",
+						"v1",
+						"card",
+						"1687493542654000",
+						"authorize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Capture a pre - authorize payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Private-Merchant-Id",
+						"value": "ef50661210954743a5db89079b87cd7a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ticketNumber\": \"617633668674716505\",\r\n  \"amount\": {\r\n    \"currency\": \"USD\",\r\n    \"subtotalIva\": 0,\r\n    \"iva\": 0,\r\n    \"subtotalIva0\": 10,\r\n    \"ice\": 0\r\n  },\r\n  \"fullResponse\": \"v2\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api-uat.kushkipagos.com/subscriptions/v1/card/1687493542654000/capture",
+					"protocol": "https",
+					"host": [
+						"api-uat",
+						"kushkipagos",
+						"com"
+					],
+					"path": [
+						"subscriptions",
+						"v1",
+						"card",
+						"1687493542654000",
+						"capture"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Void a transaction",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Private-Merchant-Id",
+						"value": "ef50661210954743a5db89079b87cd7a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fullResponse\": \"v2\",\r\n  \"amount\": {\r\n    \"subtotalIva\": 10,\r\n    \"subtotalIva0\": 0,\r\n    \"ice\": 0,\r\n    \"iva\": 0,\r\n    \"currency\": \"USD\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-uat.kushkipagos.com/v1/charges/343479395792637907",
+					"protocol": "https",
+					"host": [
+						"api-uat",
+						"kushkipagos",
+						"com"
+					],
+					"path": [
+						"v1",
+						"charges",
+						"343479395792637907"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get  subscription info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Private-Merchant-Id",
+						"value": "ef50661210954743a5db89079b87cd7a",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api-uat.kushkipagos.com/subscriptions/v1/card/search/1687493542654000",
+					"protocol": "https",
+					"host": [
+						"api-uat",
+						"kushkipagos",
+						"com"
+					],
+					"path": [
+						"subscriptions",
+						"v1",
+						"card",
+						"search",
+						"1687493542654000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get transactions list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Private-Merchant-Id",
+						"value": "ef50661210954743a5db89079b87cd7a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api-uat.kushkipagos.com/analytics/v1/transactions-list?from=2023-06-22T08:39:00.836&to=2023-06-23T18:39:00.836",
+					"protocol": "https",
+					"host": [
+						"api-uat",
+						"kushkipagos",
+						"com"
+					],
+					"path": [
+						"analytics",
+						"v1",
+						"transactions-list"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2023-06-22T08:39:00.836"
+						},
+						{
+							"key": "to",
+							"value": "2023-06-23T18:39:00.836"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
