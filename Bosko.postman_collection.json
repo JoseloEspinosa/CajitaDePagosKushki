@@ -1,0 +1,242 @@
+{
+	"info": {
+		"_postman_id": "d4f71bb5-f497-4658-8caf-743df5ea3d38",
+		"name": "Bosko",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20018682",
+		"_collection_link": "https://cloudy-crater-713436.postman.co/workspace/PruebaKushki~dd43ccbb-7747-4462-8d17-63f248c2fea7/collection/20018682-d4f71bb5-f497-4658-8caf-743df5ea3d38?action=share&creator=20018682&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Integración con Tarjetas de Crédito",
+			"item": [
+				{
+					"name": "Request a card token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Public-Merchant-Id",
+								"value": "594f2070d43649e1aec47d9f8f5d72d0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"card\": {\r\n    \"name\": \"John Doe\",\r\n    \"number\": \"5451951574925480\",\r\n    \"expiryMonth\": \"08\",\r\n    \"expiryYear\": \"23\",\r\n    \"cvv\": \"121\"\r\n  },\r\n  \"totalAmount\": 29.99,\r\n  \"currency\": \"USD\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api-uat.kushkipagos.com/card/v1/tokens",
+							"protocol": "https",
+							"host": [
+								"api-uat",
+								"kushkipagos",
+								"com"
+							],
+							"path": [
+								"card",
+								"v1",
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authorize Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Private-Merchant-Id",
+								"value": "ef50661210954743a5db89079b87cd7a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"token\": \"701535a3cc974489a01c3d3e3925b1db\",\r\n  \"amount\": {\r\n    \"subtotalIva\": 0,\r\n    \"subtotalIva0\": 1000,\r\n    \"iva\": 0\r\n  },\r\n  \"metadata\": {\r\n    \"customerId\": \"IB200\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api-uat.kushkipagos.com/card/v1/preAuthorization",
+							"protocol": "https",
+							"host": [
+								"api-uat",
+								"kushkipagos",
+								"com"
+							],
+							"path": [
+								"card",
+								"v1",
+								"preAuthorization"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Capture an authorized payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Private-Merchant-Id",
+								"value": "ef50661210954743a5db89079b87cd7a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"ticketNumber\": \"856454781339681514\",\r\n  \"amount\": {\r\n    \"currency\": \"USD\",\r\n    \"subtotalIva\": 0,\r\n    \"iva\": 0,\r\n    \"subtotalIva0\": 29.99,\r\n    \"ice\": 0\r\n  },\r\n  \"fullResponse\": \"v2\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api-uat.kushkipagos.com/card/v1/capture",
+							"protocol": "https",
+							"host": [
+								"api-uat",
+								"kushkipagos",
+								"com"
+							],
+							"path": [
+								"card",
+								"v1",
+								"capture"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Integración con Medios de Pago en Efectivo",
+			"item": [
+				{
+					"name": "Request a cash in token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Public-Merchant-Id",
+								"value": "594f2070d43649e1aec47d9f8f5d72d0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"identification\": \"123456789\",\r\n  \"documentType\": \"CC\",\r\n  \"email\": \"user@example.com\",\r\n  \"totalAmount\": 29.99,\r\n  \"currency\": \"USD\",\r\n  \"description\": \"Pago en efectivo\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api-uat.kushkipagos.com/cash/v1/tokens",
+							"protocol": "https",
+							"host": [
+								"api-uat",
+								"kushkipagos",
+								"com"
+							],
+							"path": [
+								"cash",
+								"v1",
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Init Transaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Private-Merchant-Id",
+								"value": "ef50661210954743a5db89079b87cd7a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"token\": \"98f6ed352c4a43fdb0af8a19ef75db21\",\r\n  \"expirationDate\": \"2023-12-26 21:00:00\",\r\n  \"amount\": {\r\n    \"subtotalIva\": 0,\r\n    \"subtotalIva0\": 29.99,\r\n    \"iva\": 0\r\n  },\r\n  \"webhooks\": [\r\n    {\r\n      \"events\": [\r\n        \"preauthorization\"\r\n      ],\r\n      \"headers\": [\r\n        {\r\n          \"label\": \"json\",\r\n          \"value\": \"12\"\r\n        }\r\n      ],\r\n      \"urls\": [\r\n        \"https://eof2hhkrta4ooo1.m.pipedream.net\"\r\n      ]\r\n    }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "https://api-uat.kushkipagos.com/cash/v1/charges/init",
+							"protocol": "https",
+							"host": [
+								"api-uat",
+								"kushkipagos",
+								"com"
+							],
+							"path": [
+								"cash",
+								"v1",
+								"charges",
+								"init"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transaction Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Private-Merchant-Id",
+								"value": "ef50661210954743a5db89079b87cd7a",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api-uat.kushkipagos.com/cash/v1/status/2387748812820957?ticketNumber=2387748812820957",
+							"protocol": "https",
+							"host": [
+								"api-uat",
+								"kushkipagos",
+								"com"
+							],
+							"path": [
+								"cash",
+								"v1",
+								"status",
+								"2387748812820957"
+							],
+							"query": [
+								{
+									"key": "ticketNumber",
+									"value": "2387748812820957"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
